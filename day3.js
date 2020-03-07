@@ -1,33 +1,57 @@
+// const wire1 = "R7,D5";
 const wire1 = "R75,D30,R83,U83,L12,D49,R71,U7,L72";
 const wire2 = "U62,R66,U55,R34,D71,R55,D58,R83";
 
 const getCoordinates = wire => {
   let at = [0, 0];
   let coordinates = [];
-  coordinates.push(at);
+  coordinates.push(at.slice(0));
 
   let wireArray = wire.split(",");
 
   wireArray.forEach(element => {
-    // console.log(element, at);
     if (element.includes("L")) {
-      at[0] = at[0] - Number(element.slice(1,));
+      for (let i = 0; i < Number(element.slice(1)); i++) {
+        at[0] = at[0] - 1;
+        coordinates.push(at.slice(0));
+      }
     } else if (element.includes("R")) {
-      at[0] = at[0] + Number(element.slice(1,));
+      for (let i = 0; i < Number(element.slice(1)); i++) {
+        at[0] = at[0] + 1;
+        // console.log(at)
+        coordinates.push(at.slice(0));
+        // console.log(coordinates)
+      }
     } else if (element.includes("U")) {
-      at[1] = at[1] + Number(element.slice(1,));
+      for (let i = 0; i < Number(element.slice(1)); i++) {
+        at[1] = at[1] + 1;
+        coordinates.push(at.slice(0));
+      }
     } else if (element.includes("D")) {
-      at[1] = at[1] - Number(element.slice(1,));
+      for (let i = 0; i < Number(element.slice(1)); i++) {
+        at[1] = at[1] - 1;
+        coordinates.push(at.slice(0));
+      }
     }
-    coordinates.push(at);
-    console.log(at);
   });
 
-  //   console.log(coordinates);
-
-  return [coordinates];
+  return coordinates;
 };
 
-getCoordinates(wire1)
-console.log('')
-getCoordinates(wire2)
+const findCommonPoints = (arrayA, arrayB) => {
+  commonPoints = [];
+  console.log(Array.isArray(arrayA));
+  console.log(Array.isArray(arrayB));
+  console.log(Array.isArray(commonPoints));
+  arrayA.forEach(element => {
+    val = arrayB.find(val => {
+      element === val;
+    });
+    console.log(val);
+  });
+};
+
+wire_c1 = getCoordinates(wire1);
+wire_c2 = getCoordinates(wire2);
+
+findCommonPoints(wire_c1, wire_c2);
